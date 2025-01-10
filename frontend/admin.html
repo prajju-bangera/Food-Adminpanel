@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="image/favicon.png">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    
+
+</head>
+<body>
+    <div class="sidebar">
+        
+        <div class="logoName" style="margin-top: 00px;">
+            <!-- <a href="#" id="logo" class="logo"> -->
+                 <i class="fas fa-utensils"></i> DISHDASH </a>
+        </div><br><br><br>
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="#" onclick="showTab('dashboard')">Dashboard</a></li>
+            <li><a href="#" onclick="showTab('users')">Users</a></li>
+            <li><a href="#" onclick="showTab('orders')">Orders</a></li>
+            <li><a href="#" onclick="showTab('categories')">Our Special</a></li>
+            <!-- <li><a href="#" onclick="showTab('products')">Products</a></li> -->
+            
+        </ul>
+
+    </div>
+
+    <div class="main-content">
+    
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="tab-content">
+            <h3 style="text-align: center; font-size: 30px; color: white;">Admin Dashboard</h3>
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <h4>Total Users</h4>
+                    <p id="total-users">0</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Total Orders</h4>
+                    <p id="total-orders">0</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Our Products</h4>
+                    <p id="total-products">49</p>
+                </div>
+            </div>
+            <div class="about">
+            <div class="why-choose-us">
+                <h2>Why Choose Us?</h2>
+                <p class="highlighted-text" style="font-size: 25px;">What makes our food delicious?</p>
+                <p>It's all about the smell, the taste, how it looks, is it crunchy, and how does it feel in your mouth.</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="main-content">
+        
+            <div id="users" class="tab-content">
+            <!-- Add User List in Dashboard -->
+            <h3 style="margin-top: 20px; margin-left: 600px;  color: white">WELCOME OUR CUSTOMER</h3>
+            <input type="text" id="user-search" placeholder="Search by name" 
+            style="
+            width: 30%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            margin-left: 35%;
+            display: block;
+        " 
+        onkeyup="searchUsers()">
+            <table style="width: 50%; height: 30%; margin-top: 30px; margin-left: 25%;">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>EMAIL</th>
+                        <th>PHONE NUMBER</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                    <!-- Users will be dynamically listed here -->
+                </tbody>
+            </table>
+        </div>
+        <!-- </div> -->
+        <script>
+            // const user = [
+            //     { id: 1, name: 'John Doe', email: 'john@example.com', phone: "8947589748" },
+            //     { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: "9947589748" }
+            // ];
+    
+            // const order = [
+            //     { id: 101, name: "Prajwal", email: "prajwal@gmail.com", items: [{ name: "Chicken Biryani", quantity: 2 }], totalAmount: 300 }
+            // ];
+    
+            // const product = [
+            //     { id: 1, name: 'Laptop', price: '$1000' },
+            //     { id: 2, name: 'Phone', price: '$500' }
+            // ];
+    
+            function showTab(tabName) {
+                const tabs = document.querySelectorAll('.tab-content');
+                tabs.forEach(tab => tab.style.display = 'none');
+                document.getElementById(tabName).style.display = 'block';
+            }
+    
+            function updateDashboard() {
+                document.getElementById('total-users').textContent = users.length;
+                document.getElementById('total-orders').textContent = orders.length;
+                document.getElementById('total-products').textContent = products.length;
+            }
+    
+            window.onload = function () {
+                showTab('dashboard');
+                updateDashboard();
+            };
+        </script>
+    
+       
+  
+
+        <div id="orders" class="tab-content">
+            <h3 style="margin-left: 600px; color: white">OUR ORDERS</h3>
+            <input type="text" id="order-search" placeholder="Search by name" 
+            style="
+                width: 40%;
+                padding: 10px 15px;
+                font-size: 16px;
+                border: 2px solid #ccc;
+                border-radius: 25px;
+                outline: none;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                margin-bottom: 20px;
+                margin-top: -47px;
+                margin-left: 60%;
+                display: block;
+            " 
+            onkeyup="searchOrders()"
+     >
+     
+     
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th style="width: 110px;">Date</th>
+                        <th>Time</th>
+                        <th style="width: 280px;">Items</th>
+                        <th style="width: -20px;">Total Guests</th>
+                        <th>Table Number</th>
+                        <th>Request</th>
+                        <th>Total Amount</th>
+                        <th>Payment Mode</th>
+                        <th >Status</th>
+                    </tr>
+                </thead>
+                <tbody id="order-list">
+                    <!-- Orders will be dynamically listed here -->
+                </tbody>
+            </table>
+            
+        </div>
+
+        <div id="categories" class="tab-content">
+            <h3 style="margin-left: 600px;  color: white">OUR SPECIALS</h3>
+            <div class="category-cards" id="category-list">
+                <!-- Categories will be dynamically listed here -->
+            </div>
+            <div id="category-list" class="category-cards"></div>
+        </div>
+        
+
+        <div id="products" class="tab-content">
+            <h3>Products</h3>
+            <div class="product-form">
+                <h4>Add New Product</h4>
+                <input type="text" id="product-name" placeholder="Product Name" />
+                <input type="number" id="product-price" placeholder="Price" />
+                <button onclick="addProduct()">Add Product</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody id="product-list">
+                    <!-- Products will be dynamically listed here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for Admin Dashboard
+
+        // Sample data for users, orders, categories, and products
+        const users = [
+            { id: 1, name: 'John Doe', email: 'john@example.com', phone:"8947589748" },
+            { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone:"9947589748" }
+        ];
+
+        const orders = [
+    {
+        orderId: 101,
+        Name: "Prajwal",
+        Email: 'Prajwal@gmail.com',
+        Phone: 9864553421,
+        Date: '12-02-2025',
+        Time: '10:10',
+        FoodName: 'Chicken Biriyani',
+        Quantity: '2',
+        TotalGuest: "2",
+        TableNumber: "F2,F4",
+        Request: "hgfyfg",
+        TotalAmount: '300',
+        paymentMode: "online",
+        status: 'Pending' // Default status added
+    },
+    // Additional orders...
+];
+
+const categories = [
+    { name: 'Dosa', image: 'images/dosaa.jpeg',description: ['Neer Dosa', 'Masal Dosa', 'Parota','Chapati','Tuppa Dosa','Rava Dosa','Pundi Gasi'] },
+    { name: 'Rice Item', image: 'images/rice.avif',description: ['Chicken Biriyani', 'Bamboo Biriyani', 'Dum Biryani','Thikka Biryani','Hyderabad Biriyani','Chicken Fridrice','Chicken Schezwan Fridrice','Chicken Noodals','Chicken Schezwan Fridrice'] },
+    { name: 'Pizza', image: 'images/pizza1.avif',description: ['Non-Veg Pizza', 'Veg Pizza', 'Delicious Pizza','Cheese Pizza','Mmargherita pizza']  },
+    { name: 'Chicken Starters', image: 'images/chicken.avif',description: ['Chicken Lolipop', 'Chicken Kabab(8-PC)', 'Chicken Urval','Shawarma','Chicken Pepper','Chicken Manchorian','Grilled Chicken','Garlic Chicken','Chicken Wings','Chicken Sukka','Kori Rotti','Chicken KFC']  },
+    { name: 'Juice and Milkshake', image: 'images/juice.jpg',description: ['Pineapple Juice','Blue Mojito Juice','Mango Juice','Grape Juice', 'Lime Juice', 'Avocode Juice','Strawberry Milkshake','Venilla Milkshake','Chikku Milkshake','Oreo Milkshake','Chocklate Milkshake','Sharjah Milkshake']  },
+    { name: 'Combo', image: 'images/kfc.avif' ,description: ['Chicken Combo with Chicken Biriyani alfaham chicken and chicken Curry', 'Chicken Combo with KFC-4pc, french fries and Soft Drink', 'Nati Style Chicken Biriyani with 5pc Kabab','Idli And Dosa'] }
+
+];
+        // const categories = ['Dosa', 'Rice Item', 'Pizza', 'Chicken Starters', 'Juice and Milkshake','Combo'];
+
+        const products = [
+            { id: 1, name: 'Laptop', price: '$1000' },
+            { id: 2, name: 'Phone', price: '$500' }
+        ];
+
+        // Show the selected tab
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.style.display = 'none');
+            document.getElementById(tabName).style.display = 'block';
+        }
+
+
+
+        function searchUsers() {
+        const searchTerm = document.getElementById('user-search').value.toLowerCase();
+        const userList = document.getElementById('user-list');
+        const rows = userList.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const nameCell = row.getElementsByTagName('td')[0]; // Get the "Name" column
+            const name = nameCell ? nameCell.textContent || nameCell.innerText : '';
+
+            if (name.toLowerCase().includes(searchTerm)) {
+                row.style.display = ''; // Show matching row
+                row.classList.add('highlight'); // Optional: highlight the matched row
+            } else {
+                row.style.display = 'none'; // Hide non-matching row
+                row.classList.remove('highlight'); // Remove highlight if no match
+            }
+        }
+    }
+
+
+        // Load Users
+        async function loadUsers() {
+  try {
+    const response = await fetch('http://localhost:3000/api/users');
+    const users = await response.json();
+
+    const userList = document.getElementById('user-list');
+    userList.innerHTML = ''; // Clear existing data
+
+    users.forEach(user => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+       
+        <td>${user.username}</td>
+        <td>${user.email}</td>
+        <td>${user.phone}</td>
+      `;
+      userList.appendChild(row);
+      document.getElementById('total-users').textContent = users.length;
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  }
+}
+
+window.onload = function() {
+    showTab('dashboard');
+  loadUsers();
+};
+
+    // Filter orders by name
+    function searchOrders() {
+        const searchTerm = document.getElementById('order-search').value.toLowerCase();
+        const orderList = document.getElementById('order-list');
+        const rows = orderList.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const nameCell = row.getElementsByTagName('td')[0]; // Get the "Name" column
+            const name = nameCell ? nameCell.textContent || nameCell.innerText : '';
+
+            if (name.toLowerCase().includes(searchTerm)) {
+                row.style.display = ''; // Show matching row
+                row.classList.add('highlight'); // Optional: highlight the matched row
+            } else {
+                row.style.display = 'none'; // Hide non-matching row
+                row.classList.remove('highlight'); // Remove highlight if no match
+            }
+            
+        }
+    }
+
+        // Load Orders with status buttons
+      // Load Orders with status buttons
+async function loadOrders() {
+    try {
+        const response = await fetch('http://localhost:3000/api/orders');
+        const orders = await response.json(); // Fetch the orders data
+
+        const orderList = document.getElementById('order-list');
+        orderList.innerHTML = ''; // Clear existing rows
+
+        orders.forEach(order => {
+            const row = document.createElement('tr');
+
+            // Handle items array
+            const itemsDetail = order.items
+                .map(item => `${item.name} (Quantity :${item.quantity})`)
+                .join('<br>');
+
+            row.innerHTML = `
+                <td >${order.name || 'N/A'}</td>
+                <td>${order.email || 'N/A'}</td>
+                <td>${order.phone || 'N/A'}</td>
+                <td >${order.date || 'N/A'}</td>
+                <td>${order.time || 'N/A'}</td>
+                <td >${itemsDetail || 'N/A'}</td>
+                <td>${order.totNum || 'N/A'}</td>
+                <td>${order.tableNumber || 'N/A'}</td>
+                <td>${order.request || 'N/A'}</td>
+                <td>${order.totalAmount || 'N/A'}</td>
+                <td>${order.payment || 'N/A'}</td>
+                <td>
+                    <button class="approve" onclick="updateOrderStatus('${order._id}', 'Approved')">Approve</button></br>
+                    
+                    <button class="reject" onclick="deleteOrder('${order._id}')">Reject</button>
+                </td>
+            `;
+
+            orderList.appendChild(row);
+            document.getElementById('total-orders').textContent = orders.length;
+        });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+    }
+}
+
+// Update Order Status (approve/reject)
+// Update order status and store it in local storage
+async function updateOrderStatus(orderId, status) {
+    try {
+        console.log(`Updating order ID: ${orderId} to status: ${status}`); // Debug log
+
+        // Find the button element that was clicked
+        const button = document.querySelector(`button[onclick="updateOrderStatus('${orderId}', '${status}')"]`);
+
+        if (button) {
+            // Change the button to "Approved" with green styling immediately
+            button.disabled = true;
+            button.textContent = 'Approved';
+            button.style.backgroundColor = 'green';
+            button.style.color = 'white';
+
+            // Store the order status in local storage
+            localStorage.setItem(`orderStatus-${orderId}`, 'Approved');
+
+            // Send the API request
+            const response = await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update order status.');
+                alert('Your order is Aproved');
+            } else {
+                console.log('Order status updated successfully');
+                loadOrders(); // Refresh the order list
+            }
+        }
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        alert('An error occurred while updating the order status. Please try again.');
+    }
+}
+
+
+// Restore order statuses from local storage when the page loads
+function restoreOrderStatuses() {
+    const orderStatusKeys = Object.keys(localStorage);
+    orderStatusKeys.forEach(key => {
+        if (key.startsWith('orderStatus-')) {
+            const orderId = key.replace('orderStatus-', '');
+            const status = localStorage.getItem(key);
+
+            if (status === 'Approved') {
+                // Find the corresponding button and apply the approved style
+                const button = document.querySelector(`button[onclick="updateOrderStatus('${orderId}', 'Approved')"]`);
+                if (button) {
+                    button.disabled = true;
+                    button.textContent = 'Approved';
+                    button.style.backgroundColor = 'green';
+                    button.style.color = 'white';
+                }
+            }
+        }
+    });
+}
+
+// Load orders and restore statuses on page load
+window.onload = function() {
+    loadOrders(); // Load orders
+    restoreOrderStatuses(); // Restore saved statuses
+};
+
+
+
+// Delete Order from DB
+async function deleteOrder(orderId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+            method: 'DELETE',
+            body: JSON.stringify({ status: 'Rejected' }) // Set status to Rejected
+        });
+
+        if (response.ok) {
+            loadOrders(); // Refresh the order list
+            alert('Order rejected successfully.');
+            
+        } else {
+            console.error('Failed to delete order');
+        }
+    } catch (error) {
+        console.error('Error deleting order:', error);
+    }
+}
+
+
+
+        // Toggle Order Status
+        function toggleStatus(orderId) {
+    const order = orders.find(o => o.orderId === orderId);
+    if (order) {
+        order.status = order.status === 'Approved' ? 'Rejected' : 'Approved';
+        loadOrders(); // Refresh the order list
+    }
+}
+
+
+        // Load Categories
+       // Load Categories
+       function loadCategories() {
+    const categoryList = document.getElementById('category-list');
+    categoryList.innerHTML = ''; // Clear existing categories
+
+    categories.forEach(category => {
+        const card = document.createElement('div');
+        card.classList.add('category-card');
+        
+        // Render the description as a bulleted list if it's an array
+        let descriptionHTML = '';
+        if (Array.isArray(category.description)) {
+            descriptionHTML = '<ul>';
+            category.description.forEach(item => {
+                descriptionHTML += `<li>${item}</li>`;
+            });
+            descriptionHTML += '</ul>';
+        } else {
+            descriptionHTML = `<p>${category.description}</p>`;
+        }
+
+        card.innerHTML = `
+            <img src="${category.image}" alt="${category.name}" class="category-image" />
+            <h4>${category.name}</h4>
+            <div class="popup-content">
+                ${descriptionHTML}
+            </div>
+        `;
+
+        card.addEventListener('mousemove', (event) => {
+            // Get mouse position
+            const mouseX = event.clientX + 20; // Add offset for better positioning
+            const mouseY = event.clientY + 20;
+
+            const popup = card.querySelector('.popup-content');
+            popup.style.left = `${mouseX}px`;
+            popup.style.top = `${mouseY}px`;
+        });
+
+        card.addEventListener('mouseenter', () => {
+            const popup = card.querySelector('.popup-content');
+            popup.style.display = 'block'; // Show popup on hover
+        });
+
+        card.addEventListener('mouseleave', () => {
+            const popup = card.querySelector('.popup-content');
+            popup.style.display = 'none'; // Hide popup when the mouse leaves
+        });
+
+        categoryList.appendChild(card);
+    });
+}
+
+        // Load Products
+        function loadProducts() {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                `;
+                productList.appendChild(row);
+            });
+        }
+
+        // Add New Product
+        function addProduct() {
+            const productName = document.getElementById('product-name').value;
+            const productPrice = document.getElementById('product-price').value;
+            
+            if (productName && productPrice) {
+                const newProduct = {
+                    id: products.length + 1,
+                    name: productName,
+                    price: `$${productPrice}`
+                };
+                products.push(newProduct);
+                loadProducts(); // Reload the product list
+                document.getElementById('product-name').value = ''; // Clear the form
+                document.getElementById('product-price').value = ''; // Clear the form
+            } else {
+                alert("Please provide both product name and price.");
+            }
+        }
+
+        // Initialize Dashboard
+        window.onload = function() {
+            showTab('dashboard'); // Default tab
+            loadUsers();
+            loadOrders();
+            loadCategories();
+            loadProducts();
+            showTab('users'); // Default tab
+        };
+    </script>
+</body>
+</html>
