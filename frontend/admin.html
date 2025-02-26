@@ -20,14 +20,14 @@
             <!-- <a href="#" id="logo" class="logo"> -->
                  <i class="fas fa-utensils"></i> DISHDASH </a>
         </div><br><br><br>
-        <h2>Admin Panel</h2>
+        <!-- <h2>Admin Panel</h2> -->
         <ul>
             <li><a href="#" onclick="showTab('dashboard')">Dashboard</a></li>
-            <li><a href="#" onclick="showTab('users')">Users</a></li>
+            <li><a href="#" onclick="showTab('users')">Customers</a></li>
             <li><a href="#" onclick="showTab('orders')">Orders</a></li>
             <li><a href="#" onclick="showTab('categories')">Our Special</a></li>
-            <!-- <li><a href="#" onclick="showTab('products')">Products</a></li> -->
-            
+            <li><a href="#" onclick="showTab('products')">Add Products</a></li>
+            <li><a href="#" onclick="showTab('feedback')">Feedback</a></li>
         </ul>
 
     </div>
@@ -47,8 +47,12 @@
                     <p id="total-orders">0</p>
                 </div>
                 <div class="dashboard-card">
-                    <h4>Our Products</h4>
+                    <h4>Our Foods</h4>
                     <p id="total-products">49</p>
+                </div>
+                <div class="dashboard-card">
+                    <h4>Feedback</h4>
+                    <p id="total-feedback">49</p>
                 </div>
             </div>
             <div class="about">
@@ -93,6 +97,23 @@
                 </tbody>
             </table>
         </div>
+        <div id="feedback" class="tab-content">
+            <h3 style="margin-top: 20px; margin-left: 600px;  color: white">FEEDBACK</h3>
+        <div class="main-content">
+            <table style="width: 50%; height: 30%; margin-top: 30px; margin-left: 25%;">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th>FEEDBACK</th>
+                        <th>RATING</th>
+                    </tr>
+                </thead>
+                <tbody id="feedback-list">
+                    <!-- Users will be dynamically listed here -->
+                </tbody>
+            </table>
+        </div>
+        </div>
         <!-- </div> -->
         <script>
             // const user = [
@@ -131,7 +152,7 @@
   
 
         <div id="orders" class="tab-content">
-            <h3 style="margin-left: 600px; color: white">OUR ORDERS</h3>
+            <h3 style="margin-left: 440px; color: white">OUR ORDERS</h3>
             <input type="text" id="order-search" placeholder="Search by name" 
             style="
                 width: 40%;
@@ -185,19 +206,39 @@
         
 
         <div id="products" class="tab-content">
-            <h3>Products</h3>
+            <h3 style="color: white; margin-left: 670px;">ADD PRODUCTS</h3>
             <div class="product-form">
                 <h4>Add New Product</h4>
                 <input type="text" id="product-name" placeholder="Product Name" />
+               
+                <select id="product-category" style="    padding: 10px;
+                margin: 10px;
+                width: 220px;
+                font-size: 16px;
+                border: 1px solid #000000;
+                background-color: #f9f9f9;
+                border-radius: 5px;">
+                    <option value="Dosa">Dosa</option>
+                    <option value="rice">Rice Item</option>
+                    <option value="pizza">Pizza</option>
+                    <option value="chicken">Chicken Starters</option>
+                    <option value="juice">Juice & Milkshake</option>
+                    <option value="combo">Combo</option>
+                    <!-- Add more categories as needed -->
+                </select>
                 <input type="number" id="product-price" placeholder="Price" />
-                <button onclick="addProduct()">Add Product</button>
+                <input type="file" id="product-image" accept="image/*" />
+
+                <button onclick="addProduct()" style="width: 10%; height: 10px; margin-left: 133px;">Add Product</button>
             </div>
+            
             <table>
                 <thead>
-                    <tr>
-                        <th>Product ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
+                    <tr>    
+                        <th>Food Image</th>
+                        <th>Category</th>
+                        <th>Food Name</th>
+                        <th>Price</th>  
                     </tr>
                 </thead>
                 <tbody id="product-list">
@@ -247,9 +288,11 @@ const categories = [
 ];
         // const categories = ['Dosa', 'Rice Item', 'Pizza', 'Chicken Starters', 'Juice and Milkshake','Combo'];
 
-        const products = [
-            { id: 1, name: 'Laptop', price: '$1000' },
-            { id: 2, name: 'Phone', price: '$500' }
+        const products = [];
+
+        const feedback = [
+            { id: 1, name: 'John Doe', message: 'john@example.com', rating:"5" },
+            { id: 2, name: 'Jane Smith', message: 'jane@example.com', rating:"3" }
         ];
 
         // Show the selected tab
@@ -281,7 +324,34 @@ const categories = [
         }
     }
 
+    async function loadFeedback() {
+  try {
+    const response = await fetch('http://localhost:3000/api/feedback');
+    const feedback = await response.json();
 
+    const feedbacklist = document.getElementById('feedback-list');
+    feedbacklist.innerHTML = ''; // Clear existing data
+
+    feedback.forEach(feed => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+       
+        <td>${feed.name}</td>
+        <td>${feed.message}</td>
+        <td>${feed.rating}</td>
+      `;
+      feedbacklist.appendChild(row);
+      document.getElementById('total-feedback').textContent = feedback.length;
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  }
+}
+
+window.onload = function() {
+    showTab('dashboard');
+  loadFeedback();
+};
         // Load Users
         async function loadUsers() {
   try {
@@ -536,41 +606,54 @@ async function deleteOrder(orderId) {
     });
 }
 
-        // Load Products
-        function loadProducts() {
-            const productList = document.getElementById('product-list');
-            productList.innerHTML = '';
-            products.forEach(product => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${product.id}</td>
-                    <td>${product.name}</td>
-                    <td>${product.price}</td>
-                `;
-                productList.appendChild(row);
-            });
-        }
+     // Load Products
+function loadProducts() {
+    const productList = document.getElementById('product-list');
+    productList.innerHTML = ''; // Clear the existing product list
 
-        // Add New Product
-        function addProduct() {
-            const productName = document.getElementById('product-name').value;
-            const productPrice = document.getElementById('product-price').value;
-            
-            if (productName && productPrice) {
-                const newProduct = {
-                    id: products.length + 1,
-                    name: productName,
-                    price: `$${productPrice}`
-                };
-                products.push(newProduct);
-                loadProducts(); // Reload the product list
-                document.getElementById('product-name').value = ''; // Clear the form
-                document.getElementById('product-price').value = ''; // Clear the form
-            } else {
-                alert("Please provide both product name and price.");
-            }
-        }
+    products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td><img src="${product.image}" alt="Product Image" width="100" height="100" /></td>
+            <td style="font-size:20px">${product.category}</td> <!-- Display category -->
+            <td style="font-size:20px">${product.name}</td>
+            <td style="font-size:20px">₹${product.price}</td>
+        `;
+        productList.appendChild(row);
+    });
+}
 
+// Add new product
+function addProduct() {
+    const productName = document.getElementById('product-name').value;
+    const productPrice = document.getElementById('product-price').value;
+    const productImageInput = document.getElementById('product-image');
+    const productImageFile = productImageInput.files[0];
+    const productCategory = document.getElementById('product-category').value; // Get the selected category
+
+    if (productName && productPrice && productImageFile && productCategory) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const newProduct = {
+                image: event.target.result, // Base64-encoded image data
+                category: productCategory, // Store the selected category
+                name: productName,
+                price: `${productPrice}`
+            };
+            products.push(newProduct); // Add new product to the list
+            loadProducts(); // Reload the product list
+
+            // Clear the input fields
+            document.getElementById('product-name').value = '';
+            document.getElementById('product-price').value = '';
+            document.getElementById('product-image').value = '';
+            document.getElementById('product-category').value = ''; // Reset category dropdown
+        };
+        reader.readAsDataURL(productImageFile); // Convert image to Base64
+    } else {
+        alert("Please provide product name, price, image, and category.");
+    }
+}
         // Initialize Dashboard
         window.onload = function() {
             showTab('dashboard'); // Default tab
@@ -578,7 +661,8 @@ async function deleteOrder(orderId) {
             loadOrders();
             loadCategories();
             loadProducts();
-            showTab('users'); // Default tab
+            loadFeedback();
+            // showTab('users'); // Default tab
         };
     </script>
 </body>

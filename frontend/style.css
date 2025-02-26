@@ -252,7 +252,7 @@ th, td {
             margin: 10px;
             width: 220px;
             font-size: 16px;
-            border: 1px solid #ddd;
+            border: 1px solid #000000;
             border-radius: 5px;
         }
 
@@ -518,7 +518,7 @@ th, td {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 80px;
+    gap: 12px;
     margin-top: 50px;
 }
 
@@ -527,8 +527,8 @@ th, td {
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    height: 200px;
+    width: 290px;
+    height: 230px;
     text-align: center;
     padding: 50px;
     transition: transform 0.5s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Adding smooth rotation transition */
